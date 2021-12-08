@@ -4,23 +4,23 @@
 # open input file
 file = open('input.txt')
 # read lines of input file to list of strings
-depthsStr = file.readlines()
+depths_str = file.readlines()
 # list to contain integer values
 depths = []
 # convert list of strings to list of integers
-for i in depthsStr:
+for i in depths_str:
 	depths.append(int(i))
 
 # number of times the depth increases
-numIncreases = 0
+num_increases = 0
 # set previous value to first depth
-prevDepth = depths[0]
+prev_depth = depths[0]
 # loop through depth values and count number of increases
 for depth in depths:
 	# compare current and previous depths
-	if depth > prevDepth:
-		numIncreases += 1
+	if depth > prev_depth:
+		num_increases += 1
 	# remember previous depth
-	prevDepth = depth
+	prev_depth = depth
 # print result
-print('Number of depth increases: ' + str(numIncreases))
+print('Number of depth increases: ' + str(num_increases))
