@@ -31,6 +31,16 @@ def invert(bin_val):
 			inv += '0'
 	return inv
 
+def str_to_bin(str_val):
+	# binary value to return
+	bin_val = 0
+	for i in str_val:
+		# left-shift one to make room for next bit
+		bin_val <<= 1
+		# set next bit based on character in string
+		bin_val |= i == '1'
+	return bin_val
+
 def main():
 	# get input
 	input_file = open('input.txt')
@@ -39,12 +49,15 @@ def main():
 	# remove whitespace
 	for i in range(len(diagnostic_report)):
 		diagnostic_report[i] = diagnostic_report[i].strip()
-	# get gamma rate
+	# get gamma
 	gamma = most_common_bits(diagnostic_report)
-	# get epsilon rate
+	# get epsilon by inverting gamma
 	epsilon = invert(gamma)
-	print(gamma)
-	print(epsilon)
+	# get binary values of both
+	gamma_bin = str_to_bin(gamma)
+	epsilon_bin = str_to_bin(epsilon)
+	# print result
+	print('Power consumption: ' + str(gamma_bin * epsilon_bin))
 
 if __name__ == '__main__':
 	main()
