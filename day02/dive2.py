@@ -2,16 +2,16 @@
 # Dive!
 
 # read input file into list of strings
-input_file = open('input.txt')
-lines = input_file.readlines()
-input_file.close()
+inputFile = open('input.txt')
+lines = inputFile.readlines()
+inputFile.close()
 # split into two lists (one for direction, one for distance)
 directions = []
 distances = []
 for line in lines:
-	line_split = line.split()
-	directions.append(line_split[0])
-	distances.append(int(line_split[1]))
+	lineSplit = line.split()
+	directions.append(lineSplit[0])
+	distances.append(int(lineSplit[1]))
 
 # horizontal position
 position = 0
