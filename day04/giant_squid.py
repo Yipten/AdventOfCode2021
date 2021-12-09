@@ -11,25 +11,20 @@ def convert_numbers(numbers_str):
 
 
 def convert_boards(boards_str):
-    '''
-    Converts 3D list of strings to list of tuples.
+    '''Converts 3D list of strings to 2D list of dictionaries.'''
 
-    The first value in each tuple is the integer value of that location on the
-    bingo board. The second is a boolean representing whether that board
-    location has been marked. 
-    '''
-
+    # the big list
     boards = []
     # loop through boards
     for board in range(len(boards_str)):
         boards.append([])
         # loop through rows
         for row in range(len(boards_str[board])):
-            boards[board].append([])
+            # one dictionary per row
+            boards[board].append({})
             # loop through individual values
             for i in range(len(boards_str[board][row])):
-                boards[board][row].append(
-                    (int(boards_str[board][row][i]), False))
+                boards[board][row][boards_str[board][row][i]] = False
     return boards
 
 
@@ -54,6 +49,8 @@ def main():
             # reset for next board
             temp_board = []
     input_file.close()
+
+    # convert raw input data into a more usable form
     numbers = convert_numbers(numbers_str)
     boards = convert_boards(boards_str)
 
