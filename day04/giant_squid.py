@@ -37,40 +37,35 @@ def mark_number(boards, number):
                 row[number] = True
 
 
-def check_horizontal_win(boards):
+def check_horizontal_win(board):
     '''Checks for win in horizontal direction.'''
 
-    for board in range(len(boards)):
-        for row in range(len(boards[board])):
-            if sum(boards[board][row].values()) == 5:
-                return board
-    return None
+    for row in range(len(board)):
+        if sum(board[row].values()) == 5:
+            return True
+    return False
 
 
-def check_vertical_win(boards):
+def check_vertical_win(board):
     '''Checks for win in vertical direction.'''
 
-    for board in range(len(boards)):
-        # sums of marked numbers in each column
-        col_mark_sums = [0] * 5
-        for row in range(len(boards[board])):
-            for i in range(len(boards[board][row])):
-                col_mark_sums[i] += list(boards[board][row].values())[i]
-        # check if any columns had all 5 numbers marked
-        if 5 in col_mark_sums:
-            return board
+    # sums of marked numbers in each column
+    col_mark_sums = [0] * 5
+    for row in range(len(board)):
+        for i in range(len(board[row])):
+            col_mark_sums[i] += list(board[row].values())[i]
+    # check if any columns had all 5 numbers marked
+    if 5 in col_mark_sums:
+        return board
     return None
 
 
 def check_win(boards):
     '''Checks all boards to see if there is a winner.'''
 
-    h_win = check_horizontal_win(boards)
-    v_win = check_vertical_win(boards)
-    if h_win != None:
-        return h_win
-    elif v_win != None:
-        return v_win
+    for board in range(len(boards)):
+        if check_horizontal_win(boards[board]) or check_vertical_win(boards[board]):
+            return board
     return None
 
 
