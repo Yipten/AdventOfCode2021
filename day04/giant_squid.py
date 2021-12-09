@@ -20,12 +20,22 @@ def convert_boards(boards_str):
         boards.append([])
         # loop through rows
         for row in range(len(boards_str[board])):
-            # one dictionary per row
+            # each row is a dictionary
             boards[board].append({})
             # loop through individual values
             for i in range(len(boards_str[board][row])):
-                boards[board][row][boards_str[board][row][i]] = False
+                boards[board][row][int(boards_str[board][row][i])] = False
     return boards
+
+
+def mark_number(boards, number):
+    '''Marks the number drawn on all boards that contain it.'''
+
+    # loop through each board and mark the number if it's there
+    for board in boards:
+        for row in board:
+            if number in row:
+                row[number] = True
 
 
 def main():
@@ -53,6 +63,12 @@ def main():
     # convert raw input data into a more usable form
     numbers = convert_numbers(numbers_str)
     boards = convert_boards(boards_str)
+
+    # loop through each number drawn
+    for n in numbers:
+        mark_number(boards, n)
+
+    print(boards)
 
 
 if __name__ == '__main__':
