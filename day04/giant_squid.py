@@ -65,13 +65,31 @@ def check_vertical_win(boards):
 def check_win(boards):
     '''Checks all boards to see if there is a winner.'''
 
-    check_horizontal_win(boards)
-    check_vertical_win(boards)
+    h_win = check_horizontal_win(boards)
+    v_win = check_vertical_win(boards)
+    if h_win != None:
+        return h_win
+    elif v_win != None:
+        return v_win
+    return None
+
+
+def calculate_score(boards, board_index, last_number):
+    '''Calculates the score of the winning board.'''
+
+    # calculate sum of unmarked numbers
+    sum_unmarked = 0
+    for row in boards[board_index]:
+        for number, marked in row.items():
+            if not marked:
+                sum_unmarked += number
+    # return sum multiplied by last number
+    return sum_unmarked * last_number
 
 
 def main():
     # get input
-    input_file = open('day04/input_short.txt')
+    input_file = open('day04/input.txt')
     numbers_str = input_file.readline().split(',')
     # ignore blank line
     input_file.readline()
@@ -94,14 +112,17 @@ def main():
     # convert raw input data into a more usable form
     numbers = convert_numbers(numbers_str)
     boards = convert_boards(boards_str)
+    score = 0
 
     # loop through each number drawn
     for n in numbers:
         mark_number(boards, n)
-        print(str(check_horizontal_win(boards)) +
-              ' ' + str(check_vertical_win(boards)))
+        winning_board = check_win(boards)
+        if winning_board != None:
+            score = calculate_score(boards, winning_board, n)
+            break
 
-    print(boards)
+    print('Score: ' + str(score))
 
 
 if __name__ == '__main__':
