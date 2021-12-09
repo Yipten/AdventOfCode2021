@@ -31,11 +31,42 @@ def convert_boards(boards_str):
 def mark_number(boards, number):
     '''Marks the number drawn on all boards that contain it.'''
 
-    # loop through each board and mark the number if it's there
     for board in boards:
         for row in board:
             if number in row:
                 row[number] = True
+
+
+def check_horizontal_win(boards):
+    '''Checks for win in horizontal direction.'''
+
+    for board in range(len(boards)):
+        for row in range(len(boards[board])):
+            if sum(boards[board][row].values()) == 5:
+                return board
+    return None
+
+
+def check_vertical_win(boards):
+    '''Checks for win in vertical direction.'''
+
+    for board in range(len(boards)):
+        # sums of marked numbers in each column
+        col_mark_sums = [0] * 5
+        for row in range(len(boards[board])):
+            for i in range(len(boards[board][row])):
+                col_mark_sums[i] += list(boards[board][row].values())[i]
+        # check if any columns had all 5 numbers marked
+        if 5 in col_mark_sums:
+            return board
+    return None
+
+
+def check_win(boards):
+    '''Checks all boards to see if there is a winner.'''
+
+    check_horizontal_win(boards)
+    check_vertical_win(boards)
 
 
 def main():
@@ -67,6 +98,8 @@ def main():
     # loop through each number drawn
     for n in numbers:
         mark_number(boards, n)
+        print(str(check_horizontal_win(boards)) +
+              ' ' + str(check_vertical_win(boards)))
 
     print(boards)
 
