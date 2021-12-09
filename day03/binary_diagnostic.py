@@ -43,7 +43,7 @@ def str_to_bin(str_val):
 
 def main():
 	# get input
-	input_file = open('input.txt')
+	input_file = open('day03/input.txt')
 	diagnostic_report = input_file.readlines()
 	input_file.close()
 	# remove whitespace

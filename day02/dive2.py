@@ -2,7 +2,7 @@
 # Dive!
 
 # read input file into list of strings
-input_file = open('input.txt')
+input_file = open('day02/input.txt')
 lines = input_file.readlines()
 input_file.close()
 # split into two lists (one for direction, one for distance)

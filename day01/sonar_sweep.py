@@ -2,7 +2,7 @@
 # Sonar Sweep
 
 # open input file
-input_file = open('input.txt')
+input_file = open('day01/input.txt')
 # read lines of input file to list of strings
 depths_str = input_file.readlines()
 input_file.close()
