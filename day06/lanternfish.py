@@ -12,6 +12,7 @@ def create_new_fish(fish_timers):
     num_new_fish = fish_timers.count(0)
     fish_timers.extend([8] * num_new_fish)
 
+
 def decrement_fish_timers(fish_timers, decrement_limit):
     '''
     Decrements all fish timers by 1, rolling over from 0 to 6.
@@ -22,6 +23,7 @@ def decrement_fish_timers(fish_timers, decrement_limit):
             fish_timers[i] -= 1
         else:
             fish_timers[i] = 6
+
 
 def main():
     # get input

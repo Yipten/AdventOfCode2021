@@ -14,6 +14,7 @@ def create_new_fish(fish_timer_values):
     fish_timer_values[8] += num_new_fish
     return num_new_fish
 
+
 def decrement_fish_timers(fish_timer_values, num_new_fish):
     '''
     Decrements fish timers.
@@ -32,7 +33,7 @@ def decrement_fish_timers(fish_timer_values, num_new_fish):
     # only decrement timers from 8 to 7 if they've been around for a day
     fish_timer_values[7] = fish_timer_values[8] - num_new_fish
     fish_timer_values[8] -= fish_timer_values[7]
-    
+
 
 def main():
     # get input
