@@ -22,18 +22,58 @@ def identify_easy_patterns(line):
             line[pattern] = 8
 
 
-def identify_5_char_patterns(line):
+def get_num_common_segments(pattern_1, pattern_2):
     '''
-    Identifies patterns that are 5 characters long.
+    Returns the number of lit segments the two given patterns have in common.
     '''
 
-    pass
+    num_common_segments = 0
+    for segment in pattern_1:
+        if segment in pattern_2:
+            num_common_segments += 1
+    return num_common_segments
+
+
+def identify_5_char_patterns(line):
+    '''
+    Identifies patterns that are five characters long.
+    '''
+
+    # get easy patterns
+    patterns = list(line.keys())
+    digits = list(line.values())
+    pattern_of_1 = patterns[digits.index(1)]
+    pattern_of_4 = patterns[digits.index(4)]
+
+    for pattern in line.keys():
+        # skip over patterns not five characters long
+        if len(pattern) != 5:
+            continue
+        common_with_1 = get_num_common_segments(pattern, pattern_of_1)
+        common_with_4 = get_num_common_segments(pattern, pattern_of_4)
+        if common_with_1 == 2:
+            # has to be a 3
+            line[pattern] = 3
+        elif common_with_4 == 2:
+            # has to be a 2
+            line[pattern] = 2
+        else:   # only other option
+            # has to be a 5
+            line[pattern] = 5
 
 
 def identify_6_char_patterns(line):
     '''
-    Identifies patterns that are 6 characters long.
+    Identifies patterns that are six characters long.
     '''
+
+    # get easy patterns
+    patterns = list(line.keys())
+    digits = list(line.values())
+    pattern_of_1 = patterns[digits.index(1)]
+    pattern_of_4 = patterns[digits.index(4)]
+    pattern_of_7 = patterns[digits.index(7)]
+    pattern_of_8 = patterns[digits.index(8)]
 
     pass
 
@@ -60,9 +100,9 @@ def main():
 
     for line in pattern_lines:
         identify_easy_patterns(line)
+        identify_5_char_patterns(line)
 
     print('done')
-
 
 if __name__ == '__main__':
     main()
