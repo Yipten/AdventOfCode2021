@@ -1,41 +1,41 @@
 # AoC Day 8 Part 1
 # Seven Segment Search
 
-def identify_possible_digits(pattern):
+def identify_easy_patterns(line):
     '''
-    Identifies the possible digits that could be represented by each pattern
-    depending on the length of each pattern.
-    '''
-
-    pattern_length = len(pattern)
-
-    if pattern_length == 2:
-        # 2 segments used to display 1
-        return 1
-    elif pattern_length == 3:
-        # 3 segments used to display 7
-        return 7
-    elif pattern_length == 4:
-        # 4 segments used to display 4
-        return 4
-    elif pattern_length == 5:
-        # 5 segments used to display 2, 3, and 5
-        return (2, 3, 5)
-    elif pattern_length == 6:
-        # 6 segments used to display 0, 6, and 9
-        return (0, 6, 9)
-    elif pattern_length == 7:
-        # 7 segments used to display 8
-        return 8
-
-
-def identify_digits(line):
-    '''
-    Identifies which digits correspond to each pattern.
+    Identifies which patterns correspond to 1, 4, 7, and 8
     '''
 
     for pattern in line.keys():
-        line[pattern] = identify_possible_digits(pattern)
+        pattern_length = len(pattern)
+        if pattern_length == 2:
+            # 2 segments used to display 1
+            line[pattern] = 1
+        elif pattern_length == 4:
+            # 4 segments used to display 4
+            line[pattern] = 4
+        elif pattern_length == 3:
+            # 3 segments used to display 7
+            line[pattern] = 7
+        elif pattern_length == 7:
+            # 7 segments used to display 8
+            line[pattern] = 8
+
+
+def identify_5_char_patterns(line):
+    '''
+    Identifies patterns that are 5 characters long.
+    '''
+
+    pass
+
+
+def identify_6_char_patterns(line):
+    '''
+    Identifies patterns that are 6 characters long.
+    '''
+
+    pass
 
 
 def main():
@@ -59,7 +59,7 @@ def main():
         output_pattern_lines.append(split_line[1].split())
 
     for line in pattern_lines:
-        identify_digits(line)
+        identify_easy_patterns(line)
 
     print('done')
 
