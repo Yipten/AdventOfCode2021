@@ -1,4 +1,4 @@
-# AoC Day 8 Part 1
+# AoC 2021 Day 8 Part 1
 # Seven Segment Search
 
 def main():

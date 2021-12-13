@@ -1,4 +1,4 @@
-# AoC Day 8 Part 2
+# AoC 2021 Day 8 Part 2
 # Seven Segment Search
 
 def identify_easy_patterns(line):
