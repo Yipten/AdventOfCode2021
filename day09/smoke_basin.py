@@ -10,12 +10,13 @@ def check_vertical_neighbors(heightmap, r, c):
         return heightmap[r][c] < heightmap[r + 1][c]
     elif r == len(heightmap) - 1:
         return heightmap[r][c] < heightmap[r - 1][c]
-    return heightmap[r][c] < heightmap[r - 1][c] and heightmap[r][c] < heightmap[r + 1][c]
+    return(heightmap[r][c] < heightmap[r - 1][c]
+           and heightmap[r][c] < heightmap[r + 1][c])
 
 
 def find_low_point_heights(heightmap):
     '''
-    Find all low points and return a list of their heights.
+    Finds all low points and returns a list of their heights.
     '''
 
     low_point_heights = []
