@@ -34,8 +34,6 @@ def calculate_basin_size(heightmap, r, c, counted_points=[]):
     # start counting at 1 to include the given point
     basin_size = 1
 
-    # TODO: should the comparisons use ">" or ">="?
-    # TODO: make it so points can't be counted twice (that happens right now) (maybe keep track of already counted points using a list of tuples)
     # up
     if (r > 0
             and heightmap[r - 1][c] > heightmap[r][c]
