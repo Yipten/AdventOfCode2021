@@ -18,40 +18,47 @@ def check_vertical_neighbors(heightmap, r, c):
             and heightmap[r][c] < heightmap[r + 1][c])
 
 
-def calculate_basin_size(heightmap, r, c):
+def calculate_basin_size(heightmap, r, c, counted_points=[]):
     '''
     Recursively calculates and returns the size of the basin surrounding the
     given point.
     '''
 
+    # only allow each point to be counted once
+    if (r, c) in counted_points:
+        return 0
+
+    # record which points have been counted
+    counted_points.append((r, c))
+
     # start counting at 1 to include the given point
     basin_size = 1
 
     # TODO: should the comparisons use ">" or ">="?
-    # TODO: make it so points can't be counted twice (that happens right now)
+    # TODO: make it so points can't be counted twice (that happens right now) (maybe keep track of already counted points using a list of tuples)
     # up
     if (r > 0
             and heightmap[r - 1][c] > heightmap[r][c]
             and heightmap[r - 1][c] != 9):
-        basin_size += calculate_basin_size(heightmap, r - 1, c)
+        basin_size += calculate_basin_size(heightmap, r - 1, c, counted_points)
 
     # down
     if (r < len(heightmap) - 1
             and heightmap[r + 1][c] > heightmap[r][c]
             and heightmap[r + 1][c] != 9):
-        basin_size += calculate_basin_size(heightmap, r + 1, c)
+        basin_size += calculate_basin_size(heightmap, r + 1, c, counted_points)
 
     # right
     if (c < len(heightmap[0]) - 1
             and heightmap[r][c + 1] > heightmap[r][c]
             and heightmap[r][c + 1] != 9):
-        basin_size += calculate_basin_size(heightmap, r, c + 1)
+        basin_size += calculate_basin_size(heightmap, r, c + 1, counted_points)
 
     # left
     if (c > 0
         and heightmap[r][c - 1] > heightmap[r][c]
             and heightmap[r][c - 1] != 9):
-        basin_size += calculate_basin_size(heightmap, r, c - 1)
+        basin_size += calculate_basin_size(heightmap, r, c - 1, counted_points)
 
     return basin_size
 
@@ -96,7 +103,7 @@ def find_three_largest(basin_sizes):
 
 def main():
     # get input
-    input_file = open('day09/input_short.txt')
+    input_file = open('day09/input.txt')
     input_lines = input_file.readlines()
     input_file.close()
 
@@ -112,7 +119,6 @@ def main():
             heightmap[i][j] = int(input_lines[i][j])
 
     basin_sizes = calculate_basin_sizes(heightmap)
-    print('basin sizes: ' + str(basin_sizes))
     three_largest = find_three_largest(basin_sizes)
     three_largest_prod = prod(three_largest)
     print('Product of three largest basin sizes: ' + str(three_largest_prod))
