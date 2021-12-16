@@ -1,7 +1,7 @@
 # AoC 2021 Day 11 Part 1
 # Dumbo Octopus
 
-def increment_energy_levels(energy_levels):
+def increment_all_energy_levels(energy_levels):
     '''
     Increments the energy level of each octopus.
     '''
@@ -13,8 +13,7 @@ def increment_energy_levels(energy_levels):
 
 def increment_adjacent_energy_levels(energy_levels, r, c):
     '''
-    Recursively increment the energy levels of octopuses adjacent to the given
-    location.
+    Increment the energy levels of octopuses adjacent to the given location.
     '''
 
     dr_options = (-1, 0, 1)
@@ -31,10 +30,9 @@ def increment_adjacent_energy_levels(energy_levels, r, c):
 
     for dr in dr_options:
         for dc in dc_options:
+            if dr == 0 and dc == 0:
+                continue
             energy_levels[r + dr][c + dc] += 1
-            if energy_levels[r + dr][c + dc] > 9:
-                # TODO: this currently causes infinite recursion (I think)
-                increment_adjacent_energy_levels(energy_levels, r + dr, c + dc)
 
 
 def find_num_flashes(energy_levels, num_cycles):
@@ -45,24 +43,33 @@ def find_num_flashes(energy_levels, num_cycles):
     num_flashes = 0
     for i in range(num_cycles):
         # each octopus gets its energy incremented
-        increment_energy_levels(energy_levels)
-        # energy of octopuses adjacent to those that will flash is incremented
-        for r in range(len(energy_levels)):
-            for c in range(len(energy_levels[r])):
-                if energy_levels[r][c] > 9:
-                    increment_adjacent_energy_levels(energy_levels, r, c)
-        # octopuses flash and their energy is reset to 0
+        increment_all_energy_levels(energy_levels)
+        # initialize 2D list to keep track of which octopuses have flashed
+        flashed = []
+        for j in range(len(energy_levels)):
+            flashed.append([False] * len(energy_levels[j]))
+        # loop as many times as necessary
+        prev_num_flashes = -1
+        while num_flashes > prev_num_flashes:
+            prev_num_flashes = num_flashes
+            # energy of octopuses adjacent to those that will flash is incremented
+            for r in range(len(energy_levels)):
+                for c in range(len(energy_levels[r])):
+                    if energy_levels[r][c] > 9 and not flashed[r][c]:
+                        increment_adjacent_energy_levels(energy_levels, r, c)
+                        num_flashes += 1
+                        flashed[r][c] = True
+        # reset energy of octopuses that flashed to 0
         for row in energy_levels:
-            for i in range(len(row)):
-                if row[i] > 9:
-                    num_flashes += 1
-                    row[i] = 0
+            for j in range(len(row)):
+                if row[j] > 9:
+                    row[j] = 0
     return num_flashes
 
 
 def main():
     # get input
-    input_file = open('day11/input_short.txt')
+    input_file = open('day11/input.txt')
     input_lines = input_file.readlines()
     input_file.close()
 
