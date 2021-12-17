@@ -10,7 +10,6 @@ def find_num_paths(connections, current_cave='start', caves_visited=[]):
     caves_visited.append(current_cave)
     if current_cave == 'end':
         num_paths = 1
-        # caves_visited = []  # TODO: make a replacement for this, removing one at a time moving down the stack
     else:
         num_paths = 0
         for cave in connections[current_cave]:
