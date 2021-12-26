@@ -37,22 +37,23 @@ def find_min_risk(risk_levels, visited=[], x=0, y=0):
         if y < height - 1 and not (x, y + 1) in visited:
             path_options[0].append(risk_levels[y + 1][x])
             path_options[1].append((x, y + 1))
-        if y > 0 and not (x, y - 1) in visited:
-            path_options[0].append(risk_levels[y - 1][x])
-            path_options[1].append((x, y - 1))
+        # if y > 0 and not (x, y - 1) in visited:
+        #     path_options[0].append(risk_levels[y - 1][x])
+        #     path_options[1].append((x, y - 1))
         if x < width - 1 and not (x + 1, y) in visited:
             path_options[0].append(risk_levels[y][x + 1])
             path_options[1].append((x + 1, y))
-        if x > 0 and not (x - 1, y) in visited:
-            path_options[0].append(risk_levels[y][x - 1])
-            path_options[1].append((x - 1, y))
-        # TODO: find minimum of entire path, not individual positions (verify that this is the case first)
-        # find index of path with minimum risk value
-        path_min_risk_index = path_options[0].index(min(path_options[0]))
-        # calculate the total risk of the safest path
-        next_x = path_options[1][path_min_risk_index][0]
-        next_y = path_options[1][path_min_risk_index][1]
-        risk += find_min_risk(risk_levels, visited, next_x, next_y)
+        # if x > 0 and not (x - 1, y) in visited:
+        #     path_options[0].append(risk_levels[y][x - 1])
+        #     path_options[1].append((x - 1, y))
+        # list of risk levels of all paths from current position
+        risk_options = []
+        for i in range(len(path_options[1])):
+            next_x = path_options[1][i][0]
+            next_y = path_options[1][i][1]
+            risk_options.append(find_min_risk(risk_levels, visited, next_x, next_y))
+        # keep track of minimum possible risk value
+        risk += min(risk_options)
 
     # remove points from list when moving back up down the stack
     visited.remove((x, y))
